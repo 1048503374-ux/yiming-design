@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YIMING · 平面UI设计师</title>
+<style>
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:#0a0a0a;color:#e8e8e8;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit}
+img{max-width:100%;display:block}
+
+/* ===== VARIABLES ===== */
+:root{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;
+  --accent:#39FF14;--accent2:#00FFAB;--accent-dim:rgba(57,255,20,0.15);
+  --text:#e8e8e8;--text2:#aaa;--text3:#555;
+  --radius:3px;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent-dim);border-radius:4px}
+
+/* ===== SCAN LINE (global) ===== */
+body::after{
+  content:'';position:fixed;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to bottom,transparent,rgba(57,255,20,0.05),transparent);
+  pointer-events:none;z-index:9998;
+  animation:scan 8s linear infinite;
+}
+@keyframes scan{0%{top:-2px}100%{top:100%}}
+
+/* ===== PROGRESS BAR ===== */
+#progress{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:9999;width:0%;transition:width 0.1s}
+
+/* ===== NAV ===== */
+nav.main-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:56px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;
+  background:rgba(10,10,10,0.9);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(57,255,20,0.08);
+}
+.logo{font-weight:800;font-size:16px;color:var(--accent);letter-spacing:2px}
+.logo span{color:var(--text3);font-weight:400}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:11px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--accent);transition:width 0.25s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.menu-btn{display:none;background:none;border:none;flex-direction:column;gap:5px;padding:4px}
+.menu-btn span{display:block;width:22px;height:1.5px;background:var(--accent);border-radius:1px;transition:0.3s}
+@media(max-width:768px){
+  .menu-btn{display:flex}
+  .nav-links{display:none;position:fixed;top:56px;left:0;right:0;background:rgba(10,10,10,0.98);flex-direction:column;padding:20px 24px;gap:0;border-bottom:1px solid var(--accent-dim)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px}
+  nav.main-nav{padding:0 20px}
+}
+
+/* ===== SECTION BASE ===== */
+.section{padding:120px 64px;max-width:1200px;margin:0 auto;position:relative}
+.section-tag{font-size:10px;letter-spacing:4px;color:var(--accent2);opacity:0.6;margin-bottom:8px;text-transform:uppercase}
+.section-title{font-size:clamp(36px,5vw,56px);font-weight:800;line-height:1.1;margin-bottom:14px;letter-spacing:-1.5px}
+.section-sub{font-size:15px;color:var(--text2);max-width:560px;line-height:1.8;margin-bottom:56px}
+
+/* reveal animation */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;position:relative;overflow:hidden;
+  padding:0 24px;
+}
+.hero-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:900px;height:900px;
+  background:radial-gradient(circle,rgba(57,255,20,0.03) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  font-size:10px;letter-spacing:4px;color:var(--accent);opacity:0.5;
+  margin-bottom:32px;text-transform:uppercase;
+  animation:fadeIn 1s ease 0.3s both;
+}
+.hero-name{
+  font-size:clamp(64px,12vw,140px);font-weight:900;
+  line-height:0.95;letter-spacing:-4px;
+  color:var(--text);
+  animation:fadeIn 1s ease 0.5s both;
+  position:relative;
+}
+.hero-name .green{color:var(--accent);text-shadow:0 0 40px rgba(57,255,20,0.25)}
+.hero-name::after{
+  content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);
+  width:60%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0.3;
+}
+.hero-tagline{
+  font-size:clamp(16px,2.5vw,22px);color:var(--text2);
+  margin-top:28px;letter-spacing:1px;
+  animation:fadeIn 1s ease 0.7s both;
+}
+.hero-stats{
+  display:flex;gap:56px;margin-top:48px;
+  animation:fadeIn 1s ease 0.9s both;
+}
+.hero-stat-num{font-size:42px;font-weight:800;color:var(--accent);text-shadow:0 0 20px rgba(57,255,20,0.15)}
+.hero-stat-label{font-size:11px;color:var(--text3);letter-spacing:1px;margin-top:2px}
+.hero-stat-divider{width:1px;background:linear-gradient(to bottom,transparent,var(--accent-dim),transparent)}
+.hero-cta{
+  margin-top:48px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  animation:fadeIn 1s ease 1.1s both;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 28px;border-radius:var(--radius);
+  font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  border:1px solid;border-radius:2px;
+  transition:all 0.25s;
+}
+.btn-primary{background:transparent;border-color:var(--accent);color:var(--accent)}
+.btn-primary:hover{background:rgba(57,255,20,0.08);box-shadow:0 0 20px rgba(57,255,20,0.15);transform:translateY(-2px)}
+.btn-outline{background:transparent;border-color:rgba(255,255,255,0.12);color:var(--text2)}
+.btn-outline:hover{border-color:var(--accent2);color:var(--accent2)}
+
+.scroll-cue{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  opacity:0.3;animation:fadeIn 1s ease 1.5s both;
+}
+.scroll-cue span{font-size:18px;color:var(--accent2);animation:scrollBounce 2s ease-in-out infinite}
+.scroll-cue-label{font-size:9px;color:var(--text3);letter-spacing:3px;text-transform:uppercase}
+@keyframes scrollBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+@media(max-width:768px){
+  .hero{padding:0 16px}.hero-name{letter-spacing:-2px}
+  .hero-stats{gap:24px}.hero-stat-num{font-size:24px}
+  .hero-cta{flex-direction:column;align-items:center}
+}
+
+/* ===== PORTFOLIO ===== */
+.portfolio-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:1024px){.portfolio-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.portfolio-grid{grid-template-columns:1fr}}
+
+.pcard{
+  background:var(--bg2);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);
+  overflow:hidden;cursor:pointer;transition:all 0.35s;position:relative;
+}
+.pcard:hover{transform:translateY(-6px);border-color:var(--accent-dim);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.pcard-thumb{
+  width:100%;aspect-ratio:4/3;
+  display:flex;align-items:center;justify-content:center;
+  font-size:48px;position:relative;overflow:hidden;
+}
+.pcard-thumb::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,10,10,0.8),transparent 60%);
+}
+.pcard:nth-child(1) .pcard-thumb{background:linear-gradient(135deg,#0a2e0a,#0a0a0a)}
+.pcard:nth-child(2) .pcard-thumb{background:linear-gradient(135deg,#0a1a2e,#0a0a0a)}
+.pcard:nth-child(3) .pcard-thumb{background:linear-gradient(135deg,#2e1a0a,#0a0a0a)}
+.pcard:nth-child(4) .pcard-thumb{background:linear-gradient(135deg,#1a0a2e,#0a0a0a)}
+
+.pcard-body{padding:20px;position:relative}
+.pcard-cat{font-size:9px;letter-spacing:2px;color:var(--accent2);text-transform:uppercase;margin-bottom:6px}
+.pcard-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.pcard-desc{font-size:12px;color:var(--text3);line-height:1.5}
+.pcard-count{font-size:10px;color:var(--text3);margin-top:10px;letter-spacing:1px}
+.pcard-arrow{
+  position:absolute;top:20px;right:20px;
+  width:28px;height:28px;border:1px solid rgba(255,255,255,0.1);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:var(--text3);transition:0.3s;
+}
+.pcard:hover .pcard-arrow{border-color:var(--accent);color:var(--accent);transform:translate(2px,-2px)}
+
+/* ===== SERVICES / PRICING ===== */
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:1024px){.pricing-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.pricing-grid{grid-template-columns:1fr}}
+
+.price-card{
+  background:var(--bg2);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius);
+  padding:32px 24px;position:relative;transition:all 0.35s;
+  display:flex;flex-direction:column;
+}
+.price-card:hover{transform:translateY(-4px);border-color:var(--accent-dim);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.price-card.featured{border-color:rgba(57,255,20,0.25)}
+.price-card.featured::before{
+  content:'// RECOMMENDED';position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  font-size:8px;color:var(--accent);background:var(--bg);padding:0 8px;letter-spacing:1px;white-space:nowrap;
+}
+.price-card-icon{font-size:28px;margin-bottom:14px;opacity:0.7}
+.price-card-name{font-size:14px;font-weight:600;letter-spacing:1px;margin-bottom:4px}
+.price-card-price{font-size:36px;font-weight:800;color:var(--accent);margin:10px 0 4px;line-height:1}
+.price-card-period{font-size:11px;color:var(--text3)}
+.price-card-desc{font-size:12px;color:var(--text2);line-height:1.6;margin:12px 0 18px;flex:1}
+.price-card-features{list-style:none;display:flex;flex-direction:column;gap:6px}
+.price-card-features li{font-size:11px;color:var(--text2);display:flex;align-items:center;gap:6px}
+.price-card-features li::before{content:'›';color:var(--accent);font-weight:700;font-size:13px}
+
+/* ===== ABOUT / CONTACT ===== */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+@media(max-width:768px){.about-grid{grid-template-columns:1fr;gap:40px}}
+.about-text p{font-size:14px;color:var(--text2);line-height:1.9;margin-bottom:16px}
+.about-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.about-tags span{font-size:10px;padding:5px 12px;border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);color:var(--text3);letter-spacing:1px}
+
+.contact-section{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+@media(max-width:768px){.contact-section{grid-template-columns:1fr;gap:40px}}
+.contact-item{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--bg2);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);margin-bottom:10px;transition:0.2s}
+.contact-item:hover{border-color:var(--accent-dim)}
+.contact-item-icon{font-size:18px;width:36px;text-align:center}
+.contact-item-text .label{font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase}
+.contact-item-text .value{font-size:13px;color:var(--text)}
+
+.contact-form{display:flex;flex-direction:column;gap:12px}
+.contact-form input,.contact-form textarea{
+  padding:12px 16px;border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);
+  background:var(--bg2);color:var(--text);font-size:13px;font-family:inherit;
+  transition:border-color 0.2s;
+}
+.contact-form input:focus,.contact-form textarea:focus{outline:none;border-color:var(--accent)}
+.contact-form textarea{resize:vertical;min-height:100px}
+.contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--text3')}
+.contact-form button{align-self:flex-start}
+
+/* ===== FOOTER ===== */
+footer{
+  text-align:center;padding:60px 20px;border-top:1px solid rgba(255,255,255,0.05);
+  color:var(--text3);font-size:11px;letter-spacing:1px;line-height:2.2;
+}
+footer a{color:var(--text2);transition:color 0.2s}
+footer a:hover{color:var(--accent)}
+
+/* ===== BACK TO TOP ===== */
+#backTop{
+  position:fixed;bottom:24px;right:24px;z-index:90;
+  width:40px;height:40px;border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);
+  background:var(--bg2);display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--text3);transition:0.3s;opacity:0;pointer-events:none;
+}
+#backTop.show{opacity:1;pointer-events:auto}
+#backTop:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ===== GAMES LINK ===== */
+.games-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;color:var(--accent2);letter-spacing:1px;
+  margin-top:16px;opacity:0.6;transition:0.2s;
+}
+.games-link:hover{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- Progress -->
+<div id="progress"></div>
+
+<!-- Nav -->
+<nav class="main-nav">
+  <div class="logo">YIMING<span>.DESIGN</span></div>
+  <button class="menu-btn" id="menuBtn" aria-label="菜单"><span></span><span></span><span></span></button>
+  <div class="nav-links" id="navLinks">
+    <a href="#portfolio">作品</a>
+    <a href="#services">服务</a>
+    <a href="#about">关于</a>
+    <a href="#contact">联系</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">// 平面UI设计师 · 6年经验</div>
+  <div class="hero-name">张一鸣<br><span class="green">YIMING</span></div>
+  <div class="hero-tagline">IPTV大屏 · 医疗健康 · 电商APP · 品牌设计</div>
+  <div class="hero-stats">
+    <div style="text-align:center"><div class="hero-stat-num">6+</div><div class="hero-stat-label">年经验</div></div>
+    <div class="hero-stat-divider"></div>
+    <div style="text-align:center"><div class="hero-stat-num">10+</div><div class="hero-stat-label">商业项目</div></div>
+    <div class="hero-stat-divider"></div>
+    <div style="text-align:center"><div class="hero-stat-num">3</div><div class="hero-stat-label">垂直行业</div></div>
+  </div>
+  <div class="hero-cta">
+    <a href="#portfolio" class="btn btn-primary">> 探索作品</a>
+    <a href="#contact" class="btn btn-outline">> 联系我</a>
+  </div>
+  <div class="scroll-cue"><span>↓</span><span class="scroll-cue-label">向下探索</span></div>
+</section>
+
+<!-- ===== PORTFOLIO ===== -->
+<section class="section" id="portfolio">
+  <div class="reveal">
+    <div class="section-tag">// PORTFOLIO</div>
+    <h2 class="section-title">设计藏品</h2>
+    <div class="section-sub">每一件作品，都是一个独立的故事。点击卡片查看详情。</div>
+    <div class="portfolio-grid">
+
+      <div class="pcard" onclick="openPanel(0)">
+        <div class="pcard-thumb">📺
+          <span class="pcard-arrow">→</span>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">IPTV / 大屏</div>
+          <div class="pcard-title">河北联通少儿IPTV</div>
+          <div class="pcard-desc">运营商大屏首页改版，儿童向UI设计</div>
+          <div class="pcard-count">2件作品 →</div>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="openPanel(1)">
+        <div class="pcard-thumb">🏥
+          <span class="pcard-arrow">→</span>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">医疗健康</div>
+          <div class="pcard-title">小鱼医疗平台</div>
+          <div class="pcard-desc">医疗APP UI设计，健康数据可视化</div>
+          <div class="pcard-count">2件作品 →</div>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="openPanel(2)">
+        <div class="pcard-thumb">🛍️
+          <span class="pcard-arrow">→</span>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">电商 / APP</div>
+          <div class="pcard-title">墨林艺商APP</div>
+          <div class="pcard-desc">艺术品电商APP，完整UI/UX设计</div>
+          <div class="pcard-count">1件作品 →</div>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="openPanel(3)">
+        <div class="pcard-thumb">✦
+          <span class="pcard-arrow">→</span>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-cat">品牌 / 平面</div>
+          <div class="pcard-title">品牌全案设计</div>
+          <div class="pcard-desc">VI系统、品牌策略、应用物料</div>
+          <div class="pcard-count">1件作品 →</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section class="section" id="services">
+  <div class="reveal">
+    <div class="section-tag">// SERVICES</div>
+    <h2 class="section-title">服务与报价</h2>
+    <div class="section-sub">标准服务包，也支持灵活定制。所有价格均为起步价，具体根据项目范围调整。</div>
+    <div class="pricing-grid">
+
+      <div class="price-card">
+        <div class="price-card-icon">🎨</div>
+        <div class="price-card-name">品牌起步包</div>
+        <div class="price-card-price">¥3,980</div>
+        <div class="price-card-period">一次性</div>
+        <div class="price-card-desc">适合初创团队，快速建立基础品牌形象。</div>
+        <ul class="price-card-features">
+          <li>Logo设计（3款方案）</li>
+          <li>名片/名卡设计</li>
+          <li>社交媒体模板×3</li>
+          <li>交付源文件</li>
+        </ul>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-card-icon">💻</div>
+        <div class="price-card-name">UI设计包</div>
+        <div class="price-card-price">¥12,800</div>
+        <div class="price-card-period">一次性</div>
+        <div class="price-card-desc">适合APP/Web/大屏项目，完整UI设计流程。</div>
+        <ul class="price-card-features">
+          <li>核心页面设计（≤8页）</li>
+          <li>交互原型</li>
+          <li>设计规范文档</li>
+          <li>2轮修改</li>
+        </ul>
+      </div>
+
+      <div class="price-card">
+        <div class="price-card-icon">🏢</div>
+        <div class="price-card-name">品牌全案包</div>
+        <div class="price-card-price">¥28,000</div>
+        <div class="price-card-period">一次性</div>
+        <div class="price-card-desc">适合需要完整品牌体系的客户。</div>
+        <ul class="price-card-features">
+          <li>品牌策略与定位</li>
+          <li>VI基础+应用系统</li>
+          <li>15+种物料设计</li>
+          <li>品牌使用手册</li>
+        </ul>
+      </div>
+
+      <div class="price-card">
+        <div class="price-card-icon">🔄</div>
+        <div class="price-card-name">年度订阅包</div>
+        <div class="price-card-price">¥6,800</div>
+        <div class="price-card-period">/月</div>
+        <div class="price-card-desc">适合需要持续设计支持的团队。</div>
+        <ul class="price-card-features">
+          <li>每月20张运营图</li>
+          <li>每月10个页面设计</li>
+          <li>品牌一致性审核</li>
+          <li>优先响应</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="section" id="about">
+  <div class="reveal">
+    <div class="section-tag">// ABOUT</div>
+    <h2 class="section-title">关于一鸣</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>6年平面UI设计经验，曾服务于IPTV大屏、医疗健康、电商平台等多个行业。</p>
+        <p>目前正处于从全职设计师到独立设计的过渡期，计划于2026年10月正式上线一人设计工作室。</p>
+        <p>相信好的设计是隐形的——它不抢戏，但让一切更好用。</p>
+        <div class="about-tags">
+          <span>IPTV大屏</span><span>医疗健康</span><span>电商APP</span><span>品牌VI</span><span>Figma</span><span>AI工具</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center">
+        <div style="width:240px;height:240px;background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:80px;position:relative;overflow:hidden">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(57,255,20,0.05),transparent 60%)"></div>
+          🧑‍🎨
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="section" id="contact">
+  <div class="reveal">
+    <div class="section-tag">// CONTACT</div>
+    <h2 class="section-title">联系一鸣</h2>
+    <div class="section-sub">有项目想聊？想交个朋友？都欢迎。目前可接中小型设计项目。</div>
+    <div class="contact-section">
+      <div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📱</div>
+          <div class="contact-item-text">
+            <div class="label">微信</div>
+            <div class="value">一鸣设计（请备注来源）</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div class="contact-item-text">
+            <div class="label">邮箱</div>
+            <div class="value">1048503374@qq.com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text">
+            <div class="label">位置</div>
+            <div class="value">河北石家庄</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🔗</div>
+          <div class="contact-item-text">
+            <div class="label">站酷</div>
+            <div class="value"><a href="https://www.zcool.com.cn/u/17416118" target="_blank" style="color:var(--accent)">zcool.com.cn/u/17416118</a></div>
+          </div>
+        </div>
+        <a href="games/" class="games-link">> 无聊？玩玩设计师做的小游戏 →</a>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <input type="text" placeholder="你的名字" required>
+        <input type="text" placeholder="邮箱 / 微信" required>
+        <input type="text" placeholder="项目类型（如：APP UI设计）">
+        <textarea placeholder="简单描述你的需求..." required></textarea>
+        <button type="submit" class="btn btn-primary">发送消息 →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>© 2026 YIMING · DESIGN // 用 ❤ 和 ☕ 做的网站</p>
+  <p>河北石家庄 // <a href="https://www.zcool.com.cn/u/17416118">ZCOOL</a></p>
+</footer>
+
+<!-- Back to top -->
+<div id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<!-- Panel (portfolio detail) -->
+<div id="panel" style="position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(12px)">
+  <div style="background:var(--bg2);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);max-width:480px;width:90%;max-height:70vh;overflow-y:auto;padding:32px;position:relative;animation:slideUp 0.3s ease">
+    <button onclick="closePanel()" style="position:absolute;top:12px;right:12px;width:32px;height:32px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--text3);cursor:pointer;border-radius:var(--radius);font-size:14px">✕</button>
+    <div id="panelCat" style="font-size:10px;letter-spacing:2px;color:var(--accent2);text-transform:uppercase;margin-bottom:6px"></div>
+    <div id="panelTitle" style="font-size:20px;font-weight:800;margin-bottom:4px"></div>
+    <div id="panelSub" style="font-size:12px;color:var(--text3);margin-bottom:20px"></div>
+    <div id="panelList"></div>
+  </div>
+</div>
+<style>
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+</style>
+
+<script>
+/* ===== DATA ===== */
+var CATEGORIES = [
+  {
+    name:'IPTV / 大屏', color:'#39FF14',
+    items:[
+      {title:'河北联通IPTV首页改版',role:'主UI设计师',desc:'负责少儿版IPTV首页整体改版，优化信息架构与视觉层级。'},
+      {title:'炫佳大屏运营活动',role:'UI/视觉设计',desc:'大屏端运营活动页设计，支持动效与互动玩法。'},
+    ]
+  },
+  {
+    name:'医疗健康', color:'#00FFAB',
+    items:[
+      {title:'小鱼医疗平台UI',role:'主设计师',desc:'医疗APP全套UI设计，包含首页、问诊、健康档案等模块。'},
+      {title:'健康管理系统后台',role:'UI设计',desc:'数据可视化后台界面，注重信息密度与可读性。'},
+    ]
+  },
+  {
+    name:'电商 / APP', color:'#FFD700',
+    items:[
+      {title:'墨林艺商APP',role:'UI/UX设计',desc:'艺术品电商平台，从用户研究到高保真设计全流程参与。'},
+    ]
+  },
+  {
+    name:'品牌 / 平面', color:'#FF6B6B',
+    items:[
+      {title:'品牌全案VI设计',role:'品牌设计师',desc:'包含Logo、VI基础系统、应用物料及品牌使用手册。'},
+    ]
+  },
+];
+
+/* ===== PANEL ===== */
+function openPanel(i){
+  var d = CATEGORIES[i];
+  document.getElementById('panelCat').textContent = d.name;
+  document.getElementById('panelCat').style.color = d.color;
+  document.getElementById('panelTitle').textContent = d.name;
+  document.getElementById('panelSub').textContent = d.items.length + '件作品';
+  var h = '';
+  d.items.forEach(function(it){
+    h += '<div style="padding:16px;border:1px solid rgba(255,255,255,0.05);border-radius:3px;margin-bottom:10px;transition:0.2s;cursor:default" onmouseenter="this.style.borderColor=\''+d.color+'33\'" onmouseleave="this.style.borderColor=\'rgba(255,255,255,0.05)\'"><div style="font-size:14px;font-weight:700;margin-bottom:4px">'+it.title+'</div><div style="font-size:11px;color:'+d.color+';margin-bottom:6px">> '+it.role+'</div><div style="font-size:12px;color:var(--text2);line-height:1.6">'+it.desc+'</div></div>';
+  });
+  document.getElementById('panelList').innerHTML = h;
+  document.getElementById('panel').style.display = 'flex';
+}
+function closePanel(){
+  document.getElementById('panel').style.display = 'none';
+}
+document.getElementById('panel').addEventListener('click', function(e){
+  if(e.target === this) closePanel();
+});
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePanel(); });
+
+/* ===== REVEAL ON SCROLL ===== */
+document.querySelectorAll('.reveal').forEach(function(el){
+  new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
+  },{threshold:0.12}).observe(el);
+});
+
+/* ===== PROGRESS BAR ===== */
+window.addEventListener('scroll', function(){
+  var h = document.body.scrollHeight - window.innerHeight;
+  var p = (window.scrollY / h) * 100;
+  document.getElementById('progress').style.width = p + '%';
+  var b = document.getElementById('backTop');
+  if(window.scrollY > window.innerHeight) b.classList.add('show');
+  else b.classList.remove('show');
+});
+
+/* ===== MOBILE MENU ===== */
+var menuBtn = document.getElementById('menuBtn');
+menuBtn.addEventListener('click', function(){
+  this.classList.toggle('open');
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('#navLinks a').forEach(function(a){
+  a.addEventListener('click', function(){
+    menuBtn.classList.remove('open');
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+/* ===== CONTACT FORM ===== */
+document.getElementById('contactForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  this.innerHTML = '<div style="text-align:center;padding:32px 0"><div style="font-size:36px;margin-bottom:12px;color:var(--accent)">✓</div><div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--accent)">感谢留言！</div><div style="font-size:12px;color:var(--text2);line-height:1.8">通过以下方式联系我最快：<br><a href="mailto:1048503374@qq.com" style="color:var(--accent)">1048503374@qq.com</a><br>微信：一鸣设计</div></div>';
+});
+
+/* ===== STAT COUNTER ===== */
+(function(){
+  var nums = document.querySelectorAll('.hero-stat-num');
+  if(!nums.length) return;
+  var data = [];
+  nums.forEach(function(el){
+    var m = el.textContent.match(/(\d+)(\+?)/);
+    if(m){ data.push({el:el, target:parseInt(m[1]), suffix:m[2]}); el.textContent='0'; }
+  });
+  var done = false;
+  new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting && !done){
+      done = true;
+      var start = null;
+      function step(ts){
+        if(!start) start = ts;
+        var p = Math.min((ts-start)/1800, 1);
+        var ease = 1 - Math.pow(1-p, 3);
+        data.forEach(function(d){ d.el.textContent = Math.round(d.target * ease) + d.suffix; });
+        if(p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+  },{threshold:0.3}).observe(document.querySelector('.hero'));
+})();
+</script>
+</body>
+</html>
