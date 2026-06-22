@@ -1,4 +1,4 @@
-const form = document.querySelector("#requestForm");
+const form = document.querySelector("#form");
 const resultPanel = document.querySelector("#resultPanel");
 const resultText = document.querySelector("#resultText");
 const copyButton = document.querySelector("#copyButton");
