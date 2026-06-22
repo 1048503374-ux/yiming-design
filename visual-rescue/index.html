@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>企业视觉急救包预约</title>
+    <meta name="description" content="企业视觉急救包预约页，填写资料后生成微信沟通文本。" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="hero">
+        <nav class="topbar" aria-label="页面导航">
+          <span>YIMING DESIGN</span>
+          <a href="#form">预约</a>
+        </nav>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">企业视觉急救包</p>
+            <h1>让公司看起来，先专业一点。</h1>
+            <p>
+              海报、PPT、小红书、朋友圈、官网首屏太乱时，先不用做完整品牌全案。把最影响观感的地方救回来。
+            </p>
+            <div class="hero-actions">
+              <a class="primary" href="#form">填写需求</a>
+              <a class="ghost" href="#plans">看版本</a>
+            </div>
+          </div>
+
+          <div class="visual-card" aria-label="服务摘要">
+            <div class="scanline"></div>
+            <div class="visual-head">
+              <span>Visual Rescue</span>
+              <strong>999+</strong>
+            </div>
+            <div class="poster-preview">
+              <span>Before</span>
+              <span>After</span>
+            </div>
+            <div class="score-list">
+              <div><span>统一度</span><b style="--w:86%"></b></div>
+              <div><span>专业感</span><b style="--w:92%"></b></div>
+              <div><span>复用性</span><b style="--w:78%"></b></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel promise">
+        <div>
+          <strong>不是重做品牌</strong>
+          <span>先救最明显的问题</span>
+        </div>
+        <div>
+          <strong>不是只做一张图</strong>
+          <span>给你一套可复用方向</span>
+        </div>
+        <div>
+          <strong>不是 AI 套模板</strong>
+          <span>由设计师判断和落地</span>
+        </div>
+      </section>
+
+      <section class="panel" id="plans">
+        <div class="section-title">
+          <p class="eyebrow">选择入口</p>
+          <h2>先选你当前最像哪一种。</h2>
+        </div>
+        <div class="plans" role="radiogroup" aria-label="服务版本">
+          <label class="plan active">
+            <input type="radio" name="plan" value="先做免费初步体检" checked />
+            <span class="plan-kicker">轻量入口</span>
+            <strong>先体检</strong>
+            <small>发 3-5 张图，先看 3 个问题</small>
+          </label>
+          <label class="plan">
+            <input type="radio" name="plan" value="999 基础版视觉急救包" />
+            <span class="plan-kicker">入门交付</span>
+            <strong>999 基础版</strong>
+            <small>海报 1 张 + 封面 3 张 + PPT 首页</small>
+          </label>
+          <label class="plan">
+            <input type="radio" name="plan" value="1999 标准版视觉急救包" />
+            <span class="plan-kicker">更完整</span>
+            <strong>1999 标准版</strong>
+            <small>更多封面、PPT 页面和基础规范</small>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel process">
+        <div class="section-title">
+          <p class="eyebrow">怎么合作</p>
+          <h2>流程尽量轻，不折腾。</h2>
+        </div>
+        <ol>
+          <li><span>01</span><strong>发资料</strong><small>海报、PPT、官网、小红书截图都行</small></li>
+          <li><span>02</span><strong>看问题</strong><small>先判断哪里最影响专业感</small></li>
+          <li><span>03</span><strong>做急救</strong><small>优先处理最常用的展示物料</small></li>
+          <li><span>04</span><strong>给建议</strong><small>告诉你后续怎么保持统一</small></li>
+        </ol>
+      </section>
+
+      <form class="panel form" id="form">
+        <div class="section-title">
+          <p class="eyebrow">需求表</p>
+          <h2>填完后会生成一段微信文本。</h2>
+        </div>
+
+        <label>
+          <span>公司/品牌名称</span>
+          <input name="brand" type="text" placeholder="例如：某某健康管理中心" />
+        </label>
+
+        <label>
+          <span>行业</span>
+          <select name="industry">
+            <option value="">请选择</option>
+            <option>医疗健康</option>
+            <option>教育培训</option>
+            <option>餐饮/门店</option>
+            <option>本地服务</option>
+            <option>企业服务</option>
+            <option>电商/APP</option>
+            <option>其他</option>
+          </select>
+        </label>
+
+        <label>
+          <span>联系方式</span>
+          <input name="contact" type="text" placeholder="微信 / 手机 / 邮箱" />
+        </label>
+
+        <label>
+          <span>现在最想解决的问题</span>
+          <textarea name="problem" rows="4" placeholder="例如：朋友圈图太乱、PPT 看起来不专业、小红书封面不统一"></textarea>
+        </label>
+
+        <fieldset>
+          <legend>优先优化</legend>
+          <div class="checks">
+            <label><input type="checkbox" name="needs" value="主视觉海报" />主视觉海报</label>
+            <label><input type="checkbox" name="needs" value="小红书/朋友圈封面" />小红书/朋友圈封面</label>
+            <label><input type="checkbox" name="needs" value="PPT 首页" />PPT 首页</label>
+            <label><input type="checkbox" name="needs" value="官网首屏" />官网首屏</label>
+            <label><input type="checkbox" name="needs" value="色彩字体建议" />色彩字体建议</label>
+          </div>
+        </fieldset>
+
+        <label>
+          <span>资料链接或补充说明</span>
+          <textarea name="materials" rows="3" placeholder="可以粘贴网盘链接、官网链接、小红书账号，或说明你有哪些资料"></textarea>
+        </label>
+
+        <label>
+          <span>希望什么时候用</span>
+          <input name="deadline" type="text" placeholder="例如：这周五 / 7 月初 / 不着急" />
+        </label>
+
+        <button class="submit" type="submit">生成沟通文本</button>
+      </form>
+
+      <section class="panel result" id="resultPanel" hidden>
+        <div class="section-title">
+          <p class="eyebrow">已生成</p>
+          <h2>复制这段发给我。</h2>
+        </div>
+        <textarea id="resultText" rows="12" readonly></textarea>
+        <div class="actions">
+          <button type="button" id="copyButton">复制文本</button>
+          <a href="mailto:1048503374@qq.com" id="mailLink">发邮件</a>
+        </div>
+        <p class="tip">微信里也可以直接粘贴这段内容，再把相关图片一起发来。</p>
+      </section>
+    </main>
+
+    <a class="float-cta" href="#form">预约视觉急救</a>
+    <script src="./script.js"></script>
+  </body>
+</html>
