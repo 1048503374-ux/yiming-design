@@ -1,829 +1,260 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YIMING · DESIGN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg: #0a0a0a;
-            --card-bg: rgba(20, 20, 22, 0.8);
-            --green: #39FF14;
-            --green-dim: rgba(57, 255, 20, 0.1);
-            --cyan: #00F0FF;
-            --yellow: #FFD700;
-            --red: #FF4757;
-            --text: #ffffff;
-            --text-dim: #888888;
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding: 0 60px;
-            position: relative;
-            background: radial-gradient(ellipse at 50% 100%, rgba(57, 255, 20, 0.08) 0%, transparent 60%);
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 0;
-        }
-
-        .logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -1px;
-            color: var(--text);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--green);
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            opacity: 0.6;
-            transition: opacity 0.3s;
-        }
-
-        .nav-icon:hover {
-            opacity: 1;
-        }
-
-        .hero-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding-bottom: 100px;
-        }
-
-        .hero-title {
-            font-size: 72px;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 20px;
-        }
-
-        .hero-title .underline {
-            position: relative;
-            display: inline-block;
-        }
-
-        .hero-title .underline::after {
-            content: '';
-            position: absolute;
-            bottom: 5px;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: var(--green);
-            z-index: -1;
-            opacity: 0.8;
-        }
-
-        .hero-title .highlight {
-            color: var(--green);
-        }
-
-        .hero-subtitle {
-            font-size: 18px;
-            color: var(--text-dim);
-            margin-bottom: 60px;
-        }
-
-        .stats {
-            display: flex;
-            gap: 30px;
-        }
-
-        .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 30px 50px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--green);
-        }
-
-        .stat-number {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--green);
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-dim);
-            margin-top: 8px;
-        }
-
-        /* Portfolio Section */
-        .portfolio {
-            padding: 120px 60px;
-            background: var(--bg);
-        }
-
-        .section-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--text-dim);
-            text-align: center;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .section-title {
-            font-size: 56px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .portfolio-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .portfolio-card {
-            flex: 1;
-            max-width: 280px;
-            background: var(--card-bg);
-            border: 2px solid transparent;
-            border-radius: 24px;
-            padding: 40px 30px;
-            text-align: center;
-            position: relative;
-            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-            overflow: hidden;
-        }
-
-        .portfolio-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 24px;
-            padding: 2px;
-            background: linear-gradient(135deg, var(--card-border-color), transparent 60%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-
-        .portfolio-card:nth-child(1) {
-            --card-border-color: var(--green);
-        }
-
-        .portfolio-card:nth-child(2) {
-            --card-border-color: var(--cyan);
-        }
-
-        .portfolio-card:nth-child(3) {
-            --card-border-color: var(--yellow);
-        }
-
-        .portfolio-card:nth-child(4) {
-            --card-border-color: var(--red);
-        }
-
-        .portfolio-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .portfolio-card:nth-child(1):hover {
-            border-color: var(--green);
-            box-shadow: 0 0 40px rgba(57, 255, 20, 0.2);
-        }
-
-        .portfolio-card:nth-child(2):hover {
-            border-color: var(--cyan);
-            box-shadow: 0 0 40px rgba(0, 240, 255, 0.2);
-        }
-
-        .portfolio-card:nth-child(3):hover {
-            border-color: var(--yellow);
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
-        }
-
-        .portfolio-card:nth-child(4):hover {
-            border-color: var(--red);
-            box-shadow: 0 0 40px rgba(255, 71, 87, 0.2);
-        }
-
-        .portfolio-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            font-weight: 600;
-            color: #000;
-        }
-
-        .portfolio-card:nth-child(1) .portfolio-badge {
-            background: var(--green);
-        }
-
-        .portfolio-card:nth-child(2) .portfolio-badge {
-            background: var(--cyan);
-        }
-
-        .portfolio-card:nth-child(3) .portfolio-badge {
-            background: var(--yellow);
-        }
-
-        .portfolio-card:nth-child(4) .portfolio-badge {
-            background: var(--red);
-        }
-
-        .portfolio-icon {
-            width: 100px;
-            height: 100px;
-            margin: 20px auto 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .portfolio-icon svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .portfolio-card h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .portfolio-card p {
-            font-size: 14px;
-            color: var(--text-dim);
-        }
-
-        /* Pricing Section */
-        .pricing {
-            padding: 120px 60px;
-            background: var(--bg);
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .pricing-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 35px 30px;
-            position: relative;
-            transition: all 0.3s;
-        }
-
-        .pricing-card:hover {
-            border-color: rgba(57, 255, 20, 0.3);
-            transform: translateY(-5px);
-        }
-
-        .pricing-card.recommended {
-            border-color: var(--green);
-            box-shadow: 0 0 30px rgba(57, 255, 20, 0.15);
-        }
-
-        .pricing-card.recommended::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 22px;
-            padding: 2px;
-            background: linear-gradient(135deg, var(--green), transparent 70%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
-
-        .recommended-badge {
-            position: absolute;
-            top: -12px;
-            right: 20px;
-            background: var(--green);
-            color: #000;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 6px 14px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .recommended-badge::before {
-            content: '✓';
-            font-size: 12px;
-        }
-
-        .pricing-card h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .pricing-amount {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--green);
-            margin-bottom: 8px;
-        }
-
-        .pricing-desc {
-            font-size: 14px;
-            color: var(--text-dim);
-            margin-bottom: 25px;
-        }
-
-        .pricing-features {
-            list-style: none;
-        }
-
-        .pricing-features li {
-            font-size: 14px;
-            color: var(--text-dim);
-            margin-bottom: 10px;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .pricing-features li::before {
-            content: '>';
-            position: absolute;
-            left: 0;
-            color: var(--green);
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* Notes Section */
-        .notes {
-            padding: 120px 60px;
-            background: var(--bg);
-        }
-
-        .notes-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .note-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 30px;
-            transition: all 0.3s;
-        }
-
-        .note-card:hover {
-            border-color: rgba(57, 255, 20, 0.3);
-        }
-
-        .note-date {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--green);
-            margin-bottom: 15px;
-        }
-
-        .note-card h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .note-card p {
-            font-size: 15px;
-            color: var(--text-dim);
-            margin-bottom: 20px;
-            line-height: 1.7;
-        }
-
-        .note-tag {
-            display: inline-block;
-            font-size: 12px;
-            color: var(--text-dim);
-            border: 1px solid var(--border);
-            padding: 6px 14px;
-            border-radius: 20px;
-        }
-
-        /* About Section */
-        .about {
-            padding: 120px 60px;
-            background: var(--bg);
-        }
-
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .about h2 {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 30px;
-        }
-
-        .about h2 span {
-            color: var(--text-dim);
-        }
-
-        .about p {
-            font-size: 18px;
-            color: var(--text-dim);
-            line-height: 2;
-            margin-bottom: 20px;
-        }
-
-        /* Footer */
-        .footer {
-            padding: 60px;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .footer p {
-            font-size: 14px;
-            color: var(--text-dim);
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .hero {
-                padding: 0 30px;
-            }
-
-            .hero-title {
-                font-size: 48px;
-            }
-
-            .stats {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .portfolio-grid {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .portfolio-card {
-                max-width: 45%;
-            }
-
-            .pricing-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .notes-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero-title {
-                font-size: 36px;
-            }
-
-            .portfolio-card,
-            .pricing-card {
-                max-width: 100%;
-            }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .portfolio,
-            .pricing,
-            .notes,
-            .about {
-                padding: 80px 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Hero Section -->
-    <section class="hero">
-        <nav class="nav">
-            <div class="logo">YIMING</div>
-            <ul class="nav-links">
-                <li><a href="#portfolio" class="active">作品</a></li>
-                <li><a href="#pricing">服务</a></li>
-                <li><a href="#notes">笔记</a></li>
-                <li><a href="#contact">联系</a></li>
-            </ul>
-            <div class="nav-right">
-                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-            </div>
-        </nav>
-
-        <div class="hero-content">
-            <h1 class="hero-title">
-                设计像<span class="underline">开箱</span>一样充满惊<span class="highlight">喜</span>
-            </h1>
-            <p class="hero-subtitle">六年设计经验 · UI/平面设计师 · 一人工作室</p>
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number">6+</div>
-                    <div class="stat-label">年经验</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">商业项目</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">垂直行业</div>
-                </div>
-            </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>张一鸣 视觉与 UI 设计师</title>
+    <meta
+      name="description"
+      content="张一鸣 视觉与 UI 设计师 5 年设计经验 覆盖大屏 UI APP 界面 品牌物料 活动视觉 PPT 展示与项目落地"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./scripts.js" defer></script>
+  </head>
+  <body data-mode="contrast">
+    <div class="scroll-line" data-progress></div>
+    <div class="light" data-light aria-hidden="true"></div>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="回到首页">
+        <span>一鸣</span>
+        <strong>Graphic UI Visual</strong>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-menu-toggle>
+        <span></span><span></span>
+      </button>
+      <nav class="site-nav" id="site-menu" data-menu>
+        <a href="#top">首页</a>
+        <a href="#work">能力</a>
+        <a href="#contact">联系</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Graphic Visual UI Designer</p>
+          <h1 data-hero-title>从平面到 UI<br />把项目做成视觉系统</h1>
+          <p class="lead" data-hero-lead>
+            5 年设计经验 做过 IPTV 大屏 UI APP 界面 医疗品牌物料 会议活动 PPT 与官网维护
+          </p>
+
+          <div class="mode-switch" aria-label="首屏内容切换">
+            <button class="is-active" type="button" data-mode-button="contrast">经历</button>
+            <button type="button" data-mode-button="focus">界面</button>
+            <button type="button" data-mode-button="order">落地</button>
+          </div>
+
+          <div class="hero-bottom reveal">
+            <a class="enter" href="#work">看能力内容</a>
+            <span>石家庄 5 年设计经验</span>
+          </div>
         </div>
-    </section>
 
-    <!-- Portfolio Section -->
-    <section class="portfolio" id="portfolio">
-        <p class="section-tag">// PORTFOLIO</p>
-        <h2 class="section-title">设计藏品</h2>
-        <div class="portfolio-grid">
-            <div class="portfolio-card">
-                <span class="portfolio-badge">2</span>
-                <div class="portfolio-icon">
-                    <svg viewBox="0 0 100 100" fill="none">
-                        <defs>
-                            <linearGradient id="tvGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#39FF14"/>
-                                <stop offset="50%" style="stop-color:#00F0FF"/>
-                                <stop offset="100%" style="stop-color:#39FF14"/>
-                            </linearGradient>
-                        </defs>
-                        <rect x="10" y="20" width="80" height="55" rx="4" fill="none" stroke="url(#tvGrad)" stroke-width="3"/>
-                        <rect x="15" y="25" width="70" height="40" fill="url(#tvGrad)" opacity="0.3"/>
-                        <line x1="50" y1="75" x2="50" y2="85" stroke="url(#tvGrad)" stroke-width="3"/>
-                        <line x1="35" y1="85" x2="65" y2="85" stroke="url(#tvGrad)" stroke-width="3"/>
-                        <circle cx="25" cy="45" r="4" fill="url(#tvGrad)"/>
-                        <circle cx="40" cy="45" r="4" fill="url(#tvGrad)"/>
-                    </svg>
-                </div>
-                <h3>IPTV/大屏</h3>
-                <p>智慧电视界面设计</p>
-            </div>
-
-            <div class="portfolio-card">
-                <span class="portfolio-badge">1</span>
-                <div class="portfolio-icon">
-                    <svg viewBox="0 0 100 100" fill="none">
-                        <defs>
-                            <linearGradient id="medGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#00F0FF"/>
-                                <stop offset="100%" style="stop-color:#39FF14"/>
-                            </linearGradient>
-                        </defs>
-                        <rect x="25" y="15" width="50" height="70" rx="8" fill="url(#medGrad)" opacity="0.2"/>
-                        <rect x="30" y="20" width="40" height="60" rx="4" fill="none" stroke="url(#medGrad)" stroke-width="2"/>
-                        <rect x="38" y="35" width="24" height="4" rx="2" fill="url(#medGrad)"/>
-                        <rect x="48" y="28" width="4" height="18" rx="2" fill="url(#medGrad)"/>
-                        <circle cx="40" cy="55" r="3" fill="url(#medGrad)"/>
-                        <rect x="48" y="52" width="18" height="2" rx="1" fill="url(#medGrad)"/>
-                        <rect x="48" y="58" width="14" height="2" rx="1" fill="url(#medGrad)"/>
-                    </svg>
-                </div>
-                <h3>医疗健康</h3>
-                <p>智慧医疗解决方案</p>
-            </div>
-
-            <div class="portfolio-card">
-                <span class="portfolio-badge">3</span>
-                <div class="portfolio-icon">
-                    <svg viewBox="0 0 100 100" fill="none">
-                        <defs>
-                            <linearGradient id="shopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#FFD700"/>
-                                <stop offset="100%" style="stop-color:#FF8C00"/>
-                            </linearGradient>
-                        </defs>
-                        <path d="M30 35 L35 75 L65 75 L70 35 Z" fill="url(#shopGrad)" opacity="0.3"/>
-                        <path d="M30 35 L35 75 L65 75 L70 35" stroke="url(#shopGrad)" stroke-width="3" fill="none"/>
-                        <path d="M25 35 Q50 20 75 35" stroke="url(#shopGrad)" stroke-width="3" fill="none"/>
-                        <circle cx="35" cy="85" r="4" fill="url(#shopGrad)"/>
-                        <circle cx="65" cy="85" r="4" fill="url(#shopGrad)"/>
-                    </svg>
-                </div>
-                <h3>电商/APP</h3>
-                <p>智慧电商应用设计</p>
-            </div>
-
-            <div class="portfolio-card">
-                <span class="portfolio-badge">4</span>
-                <div class="portfolio-icon">
-                    <svg viewBox="0 0 100 100" fill="none">
-                        <defs>
-                            <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#FF4757"/>
-                                <stop offset="100%" style="stop-color:#FF6B7A"/>
-                            </linearGradient>
-                        </defs>
-                        <polygon points="50,15 58,38 83,38 63,53 71,76 50,62 29,76 37,53 17,38 42,38" fill="url(#starGrad)"/>
-                    </svg>
-                </div>
-                <h3>品牌/平面</h3>
-                <p>企业视觉识别系统</p>
-            </div>
+        <div class="hero-art reveal" data-tilt aria-label="设计能力视觉装置">
+          <div class="seal">张一鸣</div>
+          <div class="paper paper-main">
+            <span data-paper-label>PROJECT</span>
+            <strong data-paper-main>系统</strong>
+          </div>
+          <div class="paper paper-ui">
+            <span>UI</span>
+            <i></i><i></i><i></i>
+          </div>
+          <div class="paper paper-brand">
+            <span>SCOPE</span>
+            <strong data-paper-sub>落地</strong>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <h2 class="section-title">服务与报价</h2>
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <h3>品牌起步包</h3>
-                <div class="pricing-amount">¥3,980</div>
-                <p class="pricing-desc">基本视觉识别</p>
-                <ul class="pricing-features">
-                    <li>Logo设计</li>
-                    <li>名片设计</li>
-                    <li>社交媒体模板</li>
-                </ul>
-            </div>
-
-            <div class="pricing-card recommended">
-                <span class="recommended-badge">RECOMMENDED</span>
-                <h3>UI设计包</h3>
-                <div class="pricing-amount">¥12,800</div>
-                <p class="pricing-desc">核心页面设计</p>
-                <ul class="pricing-features">
-                    <li>交互原型</li>
-                    <li>动效设计</li>
-                    <li>设计规范文档</li>
-                </ul>
-            </div>
-
-            <div class="pricing-card">
-                <h3>品牌全案包</h3>
-                <div class="pricing-amount">¥28,000</div>
-                <p class="pricing-desc">品牌视觉战略</p>
-                <ul class="pricing-features">
-                    <li>品牌策略</li>
-                    <li>VI系统</li>
-                    <li>15+品牌物料</li>
-                </ul>
-            </div>
-
-            <div class="pricing-card">
-                <h3>年度订阅包</h3>
-                <div class="pricing-amount">¥6,800<span style="font-size:18px;color:var(--text-dim)">/月</span></div>
-                <p class="pricing-desc">月度品牌更新</p>
-                <ul class="pricing-features">
-                    <li>每月20个图形</li>
-                    <li>10页面设计</li>
-                    <li>品牌审核</li>
-                </ul>
-            </div>
-
-            <div class="pricing-card">
-                <h3>套餐组合咨询</h3>
-                <div class="pricing-amount" style="color:var(--text-dim);font-size:28px;">按需定制</div>
-                <p class="pricing-desc">量身定制方案</p>
-                <ul class="pricing-features">
-                    <li>需求分析</li>
-                    <li>模块组合</li>
-                    <li>专属优惠</li>
-                </ul>
-            </div>
-
+      <section class="ticker" aria-label="能力关键词">
+        <div>
+          <span>大屏 UI</span>
+          <span>APP 界面</span>
+          <span>品牌物料</span>
+          <span>会议活动</span>
+          <span>PPT 展示</span>
+          <span>开发对接</span>
+          <span>大屏 UI</span>
+          <span>APP 界面</span>
+          <span>品牌物料</span>
+          <span>会议活动</span>
+          <span>PPT 展示</span>
+          <span>开发对接</span>
         </div>
-    </section>
+      </section>
 
-    <!-- Notes Section -->
-    <section class="notes" id="notes">
-        <p class="section-tag">// NOTES</p>
-        <h2 class="section-title">设计笔记</h2>
-        <div class="notes-grid">
-            <div class="note-card">
-                <div class="note-date">2026.05</div>
-                <h3>AI时代，设计师的价值在哪里？</h3>
-                <p>一个6年设计师的真实思考。</p>
-                <span class="note-tag">设计思考</span>
-            </div>
-            <div class="note-card">
-                <div class="note-date">2026.05</div>
-                <h3>一人公司创业日记 · 第1天</h3>
-                <p>从决定独立到建立完整服务体系的完整记录。</p>
-                <span class="note-tag">创业日记</span>
-            </div>
+      <section class="work" id="work">
+        <div class="section-title reveal">
+          <p class="eyebrow">Ability Scope</p>
+          <h2>我能交付的设计内容</h2>
         </div>
-    </section>
 
-    <!-- About Section -->
-    <section class="about" id="contact">
-        <div class="about-content">
-            <h2>// <span>关于一鸣</span></h2>
-            <p>6年平面UI设计经验，曾服务于IPTV大屏、医疗健康、电商平台等多个垂直行业。<br>
-            目前正处于从全职设计师到一人工作室的过渡阶段。<br><br>
-            相信好的设计是隐形的——它不抢戏，但让一切更好用、更高效。<br>
-            计划于2026年10月正式上线独立设计工作室。</p>
+        <div class="work-wall">
+          <button class="work-card reveal" type="button" data-case-button="interface" data-magnetic>
+            <span>01</span>
+            <div class="card-icon icon-interface" aria-hidden="true">
+              <i></i><i></i><i></i><i></i>
+            </div>
+            <h3>界面</h3>
+            <p>大屏 UI APP 界面 设备界面 原型 规范 切图</p>
+          </button>
+          <button class="work-card reveal" type="button" data-case-button="brand" data-magnetic>
+            <span>02</span>
+            <div class="card-icon icon-brand" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
+            <h3>品牌</h3>
+            <p>企业宣传 项目品牌 会议物料 线下触点</p>
+          </button>
+          <button class="work-card reveal" type="button" data-case-button="operation" data-magnetic>
+            <span>03</span>
+            <div class="card-icon icon-operation" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
+            <h3>运营</h3>
+            <p>专题活动 推荐图 运营位 活动主视觉</p>
+          </button>
+          <button class="work-card reveal" type="button" data-case-button="presentation" data-magnetic>
+            <span>04</span>
+            <div class="card-icon icon-presentation" aria-hidden="true">
+              <i></i><i></i><i></i><i></i>
+            </div>
+            <h3>展示</h3>
+            <p>PPT 汇报页 项目说明 方案包装</p>
+          </button>
         </div>
-    </section>
+      </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>© 2026 YIMING.DESIGN · 张一鸣的个人设计网站</p>
-    </footer>
-</body>
+      <section class="logic" id="logic">
+        <div class="logic-head reveal">
+          <p class="eyebrow">Design Check</p>
+          <h2>我会这样判断设计</h2>
+          <div class="logic-orbit" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <i></i>
+          </div>
+        </div>
+        <div class="logic-flow">
+          <article class="logic-step reveal">
+            <strong>01</strong>
+            <div>
+              <h3>先看信息</h3>
+              <p>用户能不能快速看懂</p>
+            </div>
+          </article>
+          <article class="logic-step reveal">
+            <strong>02</strong>
+            <div>
+              <h3>再定重点</h3>
+              <p>最重要的内容能不能先出现</p>
+            </div>
+          </article>
+          <article class="logic-step reveal">
+            <strong>03</strong>
+            <div>
+              <h3>统一风格</h3>
+              <p>一组页面和物料是否像一个系统</p>
+            </div>
+          </article>
+          <article class="logic-step reveal">
+            <strong>04</strong>
+            <div>
+              <h3>确认落地</h3>
+              <p>尺寸 标注 开发 印刷 现场能不能接住</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact" id="contact">
+        <div class="contact-inner reveal">
+          <div class="contact-copy">
+            <p class="eyebrow">Contact</p>
+            <h2>先发我看看</h2>
+            <p>需要界面 品牌物料 活动视觉或 PPT 展示 可以发行业 用途 时间和大概预算 我先判断能不能帮上忙</p>
+          </div>
+
+          <div class="contact-grid" aria-label="联系方式">
+            <article class="contact-method">
+              <span>微信</span>
+              <strong>扫码添加</strong>
+              <p>二维码占位 后续替换为真实微信</p>
+            </article>
+            <article class="qr-card" aria-label="微信二维码占位">
+              <div class="qr-placeholder">
+                <i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i><i></i>
+              </div>
+              <span>QR PLACEHOLDER</span>
+            </article>
+            <article class="contact-method">
+              <span>邮箱</span>
+              <strong>邮箱待补充</strong>
+              <p>部署前替换为微信号或商务邮箱</p>
+            </article>
+            <article class="contact-method link-card">
+              <span>服务页</span>
+              <strong>视觉诊断</strong>
+              <a href="./visual-rescue/">进入页面</a>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="case-modal" data-case-modal aria-hidden="true">
+      <div class="case-backdrop" data-case-close></div>
+      <section class="case-panel" role="dialog" aria-modal="true" aria-labelledby="case-title">
+        <div class="case-panel-head">
+          <div>
+            <p class="eyebrow" data-case-kicker>Interface Case</p>
+            <h2 id="case-title" data-case-title>河北联通少儿 IPTV</h2>
+          </div>
+          <button class="case-close" type="button" aria-label="关闭作品详情" data-case-close>
+            <span></span><span></span>
+          </button>
+        </div>
+
+        <div class="case-panel-body">
+          <div class="case-stage" data-case-stage aria-label="作品图占位">
+            <div class="screen large-screen">
+              <i></i><i></i><i></i>
+            </div>
+            <div class="screen small-screen">
+              <i></i><i></i>
+            </div>
+          </div>
+
+          <div class="case-detail">
+            <p data-case-intro>适合放大屏 UI 专题页 推荐位 排屏稿和切图对接记录</p>
+            <div class="case-notes">
+              <article>
+                <strong>背景</strong>
+                <p data-case-bg>少儿 IPTV 内容更新频繁 需要稳定视觉规范</p>
+              </article>
+              <article>
+                <strong>负责</strong>
+                <p data-case-role>界面更新 专题活动 推荐位 切图对接</p>
+              </article>
+              <article>
+                <strong>展示</strong>
+                <p data-case-show>放上线画面 前后对比 规范拆解</p>
+              </article>
+            </div>
+            <div class="case-slots" aria-label="作品图片位置">
+              <span>主视觉图</span>
+              <span>过程图</span>
+              <span>落地图</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
 </html>
