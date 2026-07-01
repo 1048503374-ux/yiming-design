@@ -405,9 +405,9 @@ h3 {
 
 .seal {
   position: absolute;
-  top: 9%;
-  right: 10%;
-  z-index: 5;
+  top: 10%;
+  right: 4%;
+  z-index: 9;
   display: grid;
   width: 70px;
   height: 70px;
@@ -418,7 +418,7 @@ h3 {
   font-weight: 950;
   writing-mode: vertical-rl;
   letter-spacing: 0.18em;
-  transform: rotate(8deg);
+  transform: translateZ(190px) rotate(8deg);
   box-shadow: 0 18px 60px rgba(200, 255, 0, 0.22);
 }
 
@@ -450,9 +450,10 @@ h3 {
 
 .hero-screen {
   position: absolute;
-  left: 8%;
+  z-index: 3;
+  left: 9%;
   top: 16%;
-  width: 78%;
+  width: 74%;
   min-height: 54%;
   overflow: hidden;
   border: 1px solid rgba(244, 247, 255, 0.2);
@@ -549,7 +550,7 @@ h3 {
   position: absolute;
   left: 12%;
   top: 13%;
-  z-index: 4;
+  z-index: 6;
   width: 70%;
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--acid), transparent);
@@ -562,7 +563,7 @@ h3 {
   position: absolute;
   right: 8%;
   top: 72%;
-  z-index: 5;
+  z-index: 7;
   width: min(320px, 46%);
   border: 1px solid rgba(244, 247, 255, 0.16);
   border-radius: 999px;
@@ -593,7 +594,7 @@ h3 {
   position: absolute;
   left: 5%;
   bottom: 9%;
-  z-index: 5;
+  z-index: 7;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -2172,7 +2173,7 @@ h3 {
 
   .seal {
     top: 5%;
-    right: 6%;
+    right: 3%;
     width: 58px;
     height: 58px;
     border-radius: 18px;
@@ -2180,9 +2181,9 @@ h3 {
   }
 
   .hero-screen {
-    left: 2%;
+    left: 3%;
     top: 13%;
-    width: 88%;
+    width: 84%;
     min-height: 56%;
     border-radius: 26px;
   }
@@ -2196,7 +2197,7 @@ h3 {
   }
 
   .hero-mode-card {
-    right: 2%;
+    right: 3%;
     top: 75%;
     width: 86%;
     padding: 13px 15px;
@@ -2353,6 +2354,10 @@ h3 {
 
   .hero-screen {
     min-height: 52%;
+  }
+
+  .seal {
+    right: 1%;
   }
 
   .hero-wire {
