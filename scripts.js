@@ -11,32 +11,49 @@ const heroTitle = document.querySelector("[data-hero-title]");
 const heroLead = document.querySelector("[data-hero-lead]");
 const paperLabel = document.querySelector("[data-paper-label]");
 const paperMain = document.querySelector("[data-paper-main]");
-const paperSub = document.querySelector("[data-paper-sub]");
+const paperMode = document.querySelector("[data-paper-mode]");
+const paperDesc = document.querySelector("[data-paper-desc]");
+const paperStatus = document.querySelector("[data-paper-status]");
 const caseModal = document.querySelector("[data-case-modal]");
 const caseButtons = document.querySelectorAll("[data-case-button]");
 const caseCloseButtons = document.querySelectorAll("[data-case-close]");
 
 const modes = {
-  contrast: {
-    title: "从平面到 UI<br />把项目做成视觉系统",
-    lead: "5 年设计经验 做过 IPTV 大屏 UI APP 界面 医疗品牌物料 会议活动 PPT 与官网维护",
-    label: "PROJECT",
+  interface: {
+    title: "复杂项目<br />清晰落地",
+    lead: "我更擅长把界面 品牌 物料和开发对接整理成一套可执行的视觉系统",
+    label: "Interface System",
     main: "系统",
-    sub: "落地",
+    mode: "界面",
+    desc: "大屏 UI APP 界面 原型 规范 切图",
+    status: "能设计 也能对接落地",
   },
-  focus: {
-    title: "做过大屏<br />也做过 APP 界面",
-    lead: "能处理原型 视觉稿 设计规范 交互流程和开发对接",
-    label: "INTERFACE",
-    main: "界面",
-    sub: "规范",
+  brand: {
+    title: "一组物料<br />一个系统",
+    lead: "从企业宣传 项目品牌 到会议物料和线下触点 让画面保持统一",
+    label: "Brand Identity",
+    main: "识别",
+    mode: "品牌",
+    desc: "企业宣传 项目品牌 会议物料 线下触点",
+    status: "让一组物料看起来像一个品牌",
   },
-  order: {
-    title: "不只出图<br />也考虑交付现场",
-    lead: "会议物料 品牌宣传 材质沟通 现场布置和安装监督都有实际经验",
-    label: "DELIVERY",
-    main: "交付",
-    sub: "现场",
+  operation: {
+    title: "快速内容<br />也要有秩序",
+    lead: "专题活动 推荐图 运营位和活动主视觉 重点是先被看见再被理解",
+    label: "Campaign Visual",
+    main: "触达",
+    mode: "运营",
+    desc: "专题活动 推荐图 运营位 活动主视觉",
+    status: "把信息变成更容易被看见的画面",
+  },
+  presentation: {
+    title: "复杂方案<br />清楚表达",
+    lead: "做 PPT 和项目包装时 先理清信息层级 再处理视觉风格",
+    label: "Presentation Logic",
+    main: "表达",
+    mode: "展示",
+    desc: "PPT 汇报页 项目说明 方案包装",
+    status: "让方案更清楚 更像一个完整项目",
   },
 };
 
@@ -129,7 +146,9 @@ for (const button of modeButtons) {
       if (heroLead) heroLead.textContent = content.lead;
       if (paperLabel) paperLabel.textContent = content.label;
       if (paperMain) paperMain.textContent = content.main;
-      if (paperSub) paperSub.textContent = content.sub;
+      if (paperMode) paperMode.textContent = content.mode;
+      if (paperDesc) paperDesc.textContent = content.desc;
+      if (paperStatus) paperStatus.textContent = content.status;
       for (const current of modeButtons) current.classList.toggle("is-active", current === button);
       document.body.classList.remove("is-switching");
     }, 170);
