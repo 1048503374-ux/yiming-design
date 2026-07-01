@@ -64,6 +64,8 @@ body[data-mode="order"] {
 }
 
 html {
+  max-width: 100%;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
@@ -1846,6 +1848,11 @@ h3 {
   margin-top: 52px;
   font-size: clamp(22px, 2.2vw, 30px);
   line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.contact-method strong a {
+  color: inherit;
 }
 
 .contact-method p {
@@ -1860,6 +1867,7 @@ h3 {
   margin-top: 18px;
   color: var(--text);
   font-weight: 850;
+  overflow-wrap: anywhere;
 }
 
 .qr-card {
@@ -1871,6 +1879,15 @@ h3 {
 
 .qr-card span {
   color: var(--ink-muted);
+}
+
+.qr-card img {
+  width: min(220px, 100%);
+  aspect-ratio: 1;
+  display: block;
+  object-fit: contain;
+  border-radius: 12px;
+  background: white;
 }
 
 .qr-placeholder {
@@ -2173,7 +2190,7 @@ h3 {
 
   .seal {
     top: 5%;
-    right: 3%;
+    right: 5%;
     width: 58px;
     height: 58px;
     border-radius: 18px;
@@ -2209,9 +2226,7 @@ h3 {
   }
 
   .hero-status {
-    left: 0;
-    bottom: 6%;
-    max-width: 92%;
+    display: none;
   }
 
   .hero-scan {
@@ -2311,6 +2326,15 @@ h3 {
 
   .contact-method strong {
     margin-top: 34px;
+    font-size: clamp(22px, 7vw, 30px);
+  }
+
+  .qr-card {
+    justify-items: start;
+  }
+
+  .qr-card img {
+    width: min(260px, 100%);
   }
 
   .actions,
@@ -2357,7 +2381,7 @@ h3 {
   }
 
   .seal {
-    right: 1%;
+    right: 5%;
   }
 
   .hero-wire {
@@ -2376,6 +2400,16 @@ h3 {
 
   .work-card {
     min-height: 270px;
+  }
+
+  .contact-method,
+  .qr-card {
+    min-height: 168px;
+    padding: 22px;
+  }
+
+  .contact-method strong {
+    margin-top: 26px;
   }
 
   .card-icon {
@@ -2407,6 +2441,15 @@ h3 {
 
   .hero-mode-card {
     top: 72%;
+  }
+
+  .hero-status {
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+
+  .contact-method strong {
+    font-size: 22px;
   }
 
   .work-card {
