@@ -380,7 +380,21 @@ h3 {
   backdrop-filter: blur(16px);
 }
 
+.paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(244, 247, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 247, 255, 0.045) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.48;
+}
+
 .paper span {
+  position: relative;
+  z-index: 2;
   color: rgba(244, 247, 255, 0.62);
   font-size: 12px;
   font-weight: 900;
@@ -406,11 +420,109 @@ h3 {
 
 .paper-main strong {
   position: absolute;
+  z-index: 3;
   right: 24px;
   bottom: 22px;
   color: white;
   font-size: clamp(62px, 8vw, 110px);
   line-height: 1;
+}
+
+.project-frame {
+  position: absolute;
+  z-index: 2;
+  left: 9%;
+  top: 28%;
+  width: 46%;
+  min-height: 38%;
+  border: 1px solid rgba(244, 247, 255, 0.22);
+  border-radius: 16px;
+  background: rgba(5, 7, 12, 0.12);
+}
+
+.project-frame i {
+  position: absolute;
+  display: block;
+  border-radius: 999px;
+  background: rgba(244, 247, 255, 0.28);
+}
+
+.project-frame i:nth-child(1) {
+  left: 10%;
+  top: 16%;
+  width: 24%;
+  height: 14px;
+  background: var(--acid);
+}
+
+.project-frame i:nth-child(2) {
+  right: 10%;
+  top: 16%;
+  width: 14%;
+  height: 14px;
+  background: var(--blue);
+}
+
+.project-frame i:nth-child(3) {
+  left: 10%;
+  top: 42%;
+  width: 78%;
+  height: 12px;
+}
+
+.project-frame i:nth-child(4) {
+  left: 10%;
+  top: 62%;
+  width: 56%;
+  height: 12px;
+}
+
+.project-frame i:nth-child(5) {
+  right: 10%;
+  bottom: 14%;
+  width: 20px;
+  height: 20px;
+  background: var(--hot);
+}
+
+.project-frame i:nth-child(6) {
+  left: 10%;
+  bottom: 17%;
+  width: 28%;
+  height: 10px;
+}
+
+.measure-line {
+  position: absolute;
+  z-index: 2;
+  top: 22%;
+  right: 9%;
+  width: 32%;
+  height: 1px;
+  background: rgba(244, 247, 255, 0.3);
+}
+
+.measure-line b {
+  position: absolute;
+  top: -4px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--acid);
+}
+
+.measure-line b:nth-child(1) {
+  left: 0;
+}
+
+.measure-line b:nth-child(2) {
+  left: 48%;
+  background: var(--blue);
+}
+
+.measure-line b:nth-child(3) {
+  right: 0;
+  background: var(--text);
 }
 
 .paper-main strong,
@@ -442,7 +554,20 @@ h3 {
   background: rgba(13, 18, 32, 0.82);
 }
 
+.paper-ui em {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  top: 18px;
+  color: rgba(244, 247, 255, 0.42);
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 900;
+}
+
 .paper-ui i {
+  position: relative;
+  z-index: 2;
   display: block;
   height: 30px;
   margin-top: 14px;
@@ -464,6 +589,34 @@ h3 {
   width: 54%;
 }
 
+.ui-dots {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  gap: 7px;
+}
+
+.ui-dots b {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(244, 247, 255, 0.32);
+}
+
+.ui-dots b:nth-child(1) {
+  background: var(--acid);
+}
+
+.ui-dots b:nth-child(2) {
+  background: var(--blue);
+}
+
+.ui-dots b:nth-child(3) {
+  background: var(--hot);
+}
+
 .paper-brand {
   right: 0;
   bottom: 12%;
@@ -477,11 +630,39 @@ h3 {
 
 .paper-brand strong {
   position: absolute;
+  z-index: 3;
   right: 20px;
   bottom: 16px;
   color: white;
   font-size: clamp(44px, 5.8vw, 78px);
   line-height: 1;
+}
+
+.scope-tags {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.scope-tags b {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(244, 247, 255, 0.2);
+  border-radius: 999px;
+  padding: 0 12px;
+  color: rgba(244, 247, 255, 0.72);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.scope-tags b:first-child {
+  background: var(--acid);
+  color: var(--bg);
+  border-color: transparent;
 }
 
 .hero-bottom {
@@ -1722,12 +1903,32 @@ h3 {
     font-size: 58px;
   }
 
+  .project-frame {
+    width: 42%;
+    min-height: 34%;
+  }
+
+  .measure-line {
+    display: none;
+  }
+
   .paper-brand strong {
     font-size: 42px;
   }
 
   .paper-brand {
     width: 66%;
+  }
+
+  .scope-tags {
+    gap: 6px;
+    margin-top: 18px;
+  }
+
+  .scope-tags b {
+    min-height: 26px;
+    padding: 0 9px;
+    font-size: 12px;
   }
 
   .paper-ui {
@@ -1869,6 +2070,10 @@ h3 {
 
   .paper-main {
     min-height: 52%;
+  }
+
+  .project-frame {
+    display: none;
   }
 
   .paper-ui {
