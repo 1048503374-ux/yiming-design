@@ -939,31 +939,73 @@ h3 {
 }
 
 .enter {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  min-height: 40px;
+  min-height: 46px;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 0 14px;
-  background: rgba(244, 247, 255, 0.08);
+  padding: 0 18px;
+  background:
+    linear-gradient(90deg, rgba(244, 247, 255, 0.08), rgba(244, 247, 255, 0.03)),
+    rgba(244, 247, 255, 0.08);
   color: var(--text);
-  font-weight: 850;
+  font-weight: 900;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.enter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 0 34%, rgba(255, 255, 255, 0.34) 48%, transparent 62% 100%);
+  opacity: 0;
+  transform: translateX(-120%);
+  transition:
+    opacity 220ms ease,
+    transform 520ms ease;
 }
 
 .enter::after {
   content: "";
+  position: relative;
+  z-index: 2;
   width: 8px;
   height: 8px;
   border-top: 2px solid currentColor;
   border-right: 2px solid currentColor;
   background: transparent;
   transform: rotate(45deg);
-  transition: width 180ms ease;
+  transition: transform 180ms ease;
 }
 
-.enter:hover::after {
-  width: 8px;
+.enter:hover,
+.enter:focus-visible {
+  border-color: transparent;
+  background: var(--acid);
+  color: var(--bg);
+  outline: 0;
+  transform: translateY(-3px);
+  box-shadow: 0 24px 80px rgba(200, 255, 0, 0.18);
+}
+
+.enter:hover::before,
+.enter:focus-visible::before {
+  opacity: 1;
+  transform: translateX(120%);
+}
+
+.enter:hover::after,
+.enter:focus-visible::after {
+  transform: translateX(3px) rotate(45deg);
 }
 
 .hero-bottom > span {
@@ -1840,6 +1882,12 @@ h3 {
     linear-gradient(135deg, rgba(47, 107, 255, 0.95), rgba(9, 13, 22, 0.9));
   color: var(--text);
   box-shadow: 0 34px 110px rgba(0, 0, 0, 0.34);
+  transform: translateZ(0);
+  transition:
+    transform 260ms ease,
+    border-color 260ms ease,
+    box-shadow 260ms ease,
+    filter 260ms ease;
 }
 
 .diagnosis-card::before {
@@ -1849,6 +1897,9 @@ h3 {
   border: 1px solid rgba(244, 247, 255, 0.18);
   border-radius: 18px;
   pointer-events: none;
+  transition:
+    border-color 260ms ease,
+    transform 260ms ease;
 }
 
 .diagnosis-card::after {
@@ -1860,6 +1911,46 @@ h3 {
   height: 260px;
   border: 1px solid rgba(244, 247, 255, 0.18);
   border-radius: 50%;
+  transition:
+    transform 340ms ease,
+    border-color 260ms ease,
+    opacity 260ms ease;
+}
+
+.diagnosis-card > span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 52px;
+  width: 110px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--acid), transparent);
+  box-shadow: 0 0 24px rgba(200, 255, 0, 0.5);
+  animation: cta-line 2.8s ease-in-out infinite;
+}
+
+.diagnosis-card:hover,
+.diagnosis-card:focus-visible {
+  border-color: rgba(200, 255, 0, 0.52);
+  outline: 0;
+  transform: translateY(-8px);
+  box-shadow:
+    0 40px 130px rgba(47, 107, 255, 0.25),
+    0 0 0 1px rgba(200, 255, 0, 0.14) inset;
+  filter: saturate(1.08);
+}
+
+.diagnosis-card:hover::before,
+.diagnosis-card:focus-visible::before {
+  border-color: rgba(244, 247, 255, 0.32);
+  transform: scale(0.985);
+}
+
+.diagnosis-card:hover::after,
+.diagnosis-card:focus-visible::after {
+  transform: scale(1.25) translate(-16px, -16px);
+  border-color: rgba(200, 255, 0, 0.3);
+  opacity: 0.86;
 }
 
 .diagnosis-card span,
@@ -1906,6 +1997,11 @@ h3 {
   color: var(--bg);
   font-size: 15px;
   font-weight: 950;
+  box-shadow: 0 18px 54px rgba(200, 255, 0, 0.22);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease;
 }
 
 .diagnosis-card b::after {
@@ -1915,6 +2011,18 @@ h3 {
   border-top: 2px solid currentColor;
   border-right: 2px solid currentColor;
   transform: rotate(45deg);
+  animation: arrow-nudge 1.5s ease-in-out infinite;
+}
+
+.diagnosis-card:hover b,
+.diagnosis-card:focus-visible b {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 70px rgba(200, 255, 0, 0.28);
+}
+
+.diagnosis-card:hover b::after,
+.diagnosis-card:focus-visible b::after {
+  animation-duration: 0.8s;
 }
 
 .contact-main {
@@ -1977,6 +2085,20 @@ h3 {
   align-content: center;
   padding: 20px 24px;
   color: var(--text);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease;
+}
+
+.contact-line:hover,
+.contact-line:focus-visible {
+  border-color: rgba(244, 247, 255, 0.28);
+  outline: 0;
+  transform: translateY(-3px);
+  background:
+    linear-gradient(180deg, rgba(244, 247, 255, 0.12), rgba(244, 247, 255, 0.04)),
+    rgba(244, 247, 255, 0.06);
 }
 
 .contact-line strong {
@@ -2093,6 +2215,28 @@ h3 {
   }
 }
 
+@keyframes arrow-nudge {
+  0%,
+  100% {
+    transform: translateX(0) rotate(45deg);
+  }
+  50% {
+    transform: translateX(4px) rotate(45deg);
+  }
+}
+
+@keyframes cta-line {
+  0%,
+  100% {
+    opacity: 0.38;
+    transform: scaleX(0.72);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
 @media (max-width: 1080px) {
   .hero {
     min-height: auto;
@@ -2167,6 +2311,12 @@ h3 {
 }
 
 @media (hover: none), (pointer: coarse) {
+  .enter:active,
+  .diagnosis-card:active,
+  .contact-line:active {
+    transform: scale(0.985);
+  }
+
   .work-card::after {
     opacity: 1;
     transform: translateY(0);
