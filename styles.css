@@ -69,6 +69,10 @@ html {
   scroll-behavior: smooth;
 }
 
+section {
+  scroll-margin-top: 108px;
+}
+
 body {
   margin: 0;
   overflow-x: hidden;
@@ -1816,25 +1820,51 @@ h3 {
   line-height: 1.8;
 }
 
-.contact-grid {
+.contact-panel {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.72fr);
   gap: 20px;
 }
 
-.contact-method,
-.qr-card {
-  min-height: 210px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 30px;
+.diagnosis-card {
+  position: relative;
+  min-height: 250px;
+  display: grid;
+  align-content: space-between;
+  overflow: hidden;
+  border: 1px solid rgba(244, 247, 255, 0.18);
+  border-radius: 24px;
+  padding: clamp(28px, 3vw, 42px);
   background:
-    linear-gradient(180deg, rgba(244, 247, 255, 0.08), rgba(244, 247, 255, 0.03)),
-    rgba(244, 247, 255, 0.04);
+    radial-gradient(circle at 82% 18%, rgba(200, 255, 0, 0.28), transparent 30%),
+    radial-gradient(circle at 18% 90%, rgba(47, 107, 255, 0.34), transparent 32%),
+    linear-gradient(135deg, rgba(47, 107, 255, 0.95), rgba(9, 13, 22, 0.9));
+  color: var(--text);
+  box-shadow: 0 34px 110px rgba(0, 0, 0, 0.34);
 }
 
-.contact-method span,
-.qr-card span {
+.diagnosis-card::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(244, 247, 255, 0.18);
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+.diagnosis-card::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  bottom: -80px;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(244, 247, 255, 0.18);
+  border-radius: 50%;
+}
+
+.diagnosis-card span,
+.qr-card span,
+.contact-line span {
   display: block;
   color: var(--acid);
   font-size: 12px;
@@ -1843,72 +1873,118 @@ h3 {
   text-transform: uppercase;
 }
 
-.contact-method strong {
+.diagnosis-card strong {
+  position: relative;
+  z-index: 2;
   display: block;
-  margin-top: 52px;
-  font-size: clamp(22px, 2.2vw, 30px);
-  line-height: 1.18;
-  overflow-wrap: anywhere;
+  margin-top: 34px;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1.12;
 }
 
-.contact-method strong a {
-  color: inherit;
+.diagnosis-card p {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  margin: 18px 0 0;
+  color: rgba(244, 247, 255, 0.68);
+  font-size: 16px;
+  line-height: 1.75;
 }
 
-.contact-method p {
-  margin: 14px 0 0;
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.7;
-}
-
-.link-card a {
+.diagnosis-card b {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  min-height: 44px;
   display: inline-flex;
-  margin-top: 18px;
-  color: var(--text);
-  font-weight: 850;
-  overflow-wrap: anywhere;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  padding: 0 18px;
+  background: var(--acid);
+  color: var(--bg);
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.diagnosis-card b::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.contact-main {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.82fr) minmax(260px, 1fr);
+  gap: 20px;
+}
+
+.qr-card,
+.contact-line {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(244, 247, 255, 0.08), rgba(244, 247, 255, 0.03)),
+    rgba(244, 247, 255, 0.04);
 }
 
 .qr-card {
   display: grid;
-  align-content: space-between;
-  background: var(--text);
-  color: var(--bg);
-}
-
-.qr-card span {
-  color: var(--ink-muted);
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  min-height: 190px;
+  padding: 24px;
 }
 
 .qr-card img {
-  width: min(220px, 100%);
+  width: 148px;
   aspect-ratio: 1;
   display: block;
   object-fit: contain;
-  border-radius: 12px;
+  border: 10px solid var(--text);
+  border-radius: 18px;
   background: white;
 }
 
-.qr-placeholder {
+.qr-card strong {
+  display: block;
+  margin-top: 16px;
+  color: var(--text);
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.qr-card p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.contact-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 7px;
-  width: min(180px, 100%);
-  aspect-ratio: 1;
+  gap: 20px;
 }
 
-.qr-placeholder i {
-  border-radius: 4px;
-  background: var(--bg);
+.contact-line {
+  min-height: 85px;
+  display: grid;
+  align-content: center;
+  padding: 20px 24px;
+  color: var(--text);
 }
 
-.qr-placeholder i:nth-child(3n) {
-  background: var(--blue);
-}
-
-.qr-placeholder i:nth-child(5n) {
-  background: var(--acid);
+.contact-line strong {
+  margin-top: 10px;
+  color: var(--text);
+  font-size: clamp(20px, 2.1vw, 28px);
+  line-height: 1.18;
+  overflow-wrap: anywhere;
 }
 
 .actions {
@@ -2247,7 +2323,7 @@ h3 {
   .work-wall,
   .case-notes,
   .logic-flow,
-  .contact-grid {
+  .contact-main {
     grid-template-columns: 1fr;
   }
 
@@ -2318,23 +2394,30 @@ h3 {
     aspect-ratio: 1.65;
   }
 
-  .contact-method,
-  .qr-card {
-    min-height: 190px;
-    padding: 26px;
+  .diagnosis-card {
+    min-height: 230px;
+    padding: 28px;
   }
 
-  .contact-method strong {
-    margin-top: 34px;
-    font-size: clamp(22px, 7vw, 30px);
+  .diagnosis-card strong {
+    margin-top: 28px;
+    font-size: clamp(30px, 8vw, 42px);
   }
 
   .qr-card {
-    justify-items: start;
+    grid-template-columns: 132px minmax(0, 1fr);
+    min-height: 170px;
+    padding: 22px;
   }
 
   .qr-card img {
-    width: min(260px, 100%);
+    width: 132px;
+    border-width: 8px;
+  }
+
+  .contact-line {
+    min-height: 76px;
+    padding: 18px 22px;
   }
 
   .actions,
@@ -2402,14 +2485,28 @@ h3 {
     min-height: 270px;
   }
 
-  .contact-method,
-  .qr-card {
-    min-height: 168px;
-    padding: 22px;
+  .diagnosis-card {
+    min-height: 220px;
+    border-radius: 20px;
+    padding: 24px;
   }
 
-  .contact-method strong {
-    margin-top: 26px;
+  .diagnosis-card p {
+    font-size: 15px;
+  }
+
+  .qr-card {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    justify-items: start;
+  }
+
+  .qr-card img {
+    width: min(220px, 100%);
+  }
+
+  .qr-card strong {
+    margin-top: 12px;
   }
 
   .card-icon {
@@ -2448,8 +2545,12 @@ h3 {
     padding: 10px 12px;
   }
 
-  .contact-method strong {
-    font-size: 22px;
+  .diagnosis-card strong {
+    font-size: 30px;
+  }
+
+  .contact-line strong {
+    font-size: 20px;
   }
 
   .work-card {
